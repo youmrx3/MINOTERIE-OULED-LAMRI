@@ -302,6 +302,21 @@
   [dir='rtl'] .step-line { transform-origin: right center; }
   .js .step.is-in .step-line { transform: scaleX(1); }
 
+  /* Header: slides in, then its gold rule draws from the centre outward */
+  .header-in { animation: headerIn 600ms var(--ease-out) both; }
+  @keyframes headerIn { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+  .header-rule { opacity: 0.55; transform-origin: center; animation: ruleDraw 1100ms var(--ease-out) 250ms both; }
+  @keyframes ruleDraw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* Hero separator: two rules grow away from the star, which settles in between */
+  .sep-line { height: 1px; flex: 1; background: var(--gold); opacity: 0.7; transform: scaleX(0); animation: ruleDraw 1200ms var(--ease-out) 1100ms forwards; }
+  .sep-line--start { transform-origin: right center; }
+  .sep-line--end { transform-origin: left center; }
+  [dir='rtl'] .sep-line--start { transform-origin: left center; }
+  [dir='rtl'] .sep-line--end { transform-origin: right center; }
+  .sep-star { opacity: 0; transform: scale(0.4) rotate(-45deg); animation: sepStar 700ms var(--ease-out) 1000ms forwards; }
+  @keyframes sepStar { to { opacity: 1; transform: none; } }
+
   /* Drawer links arrive one after another */
   .drawer-item { opacity: 0; animation: fadeIn 520ms var(--ease-out) forwards; }
 
@@ -339,7 +354,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .reveal, .reveal.is-in { opacity: 1 !important; transform: none !important; transition: none !important; }
-    .rise > span, .fade-in, .seal-pop, .drawer-item, .wa-float { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .rise > span, .fade-in, .seal-pop, .drawer-item, .wa-float, .header-in, .sep-star { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .header-rule, .sep-line { animation: none !important; transform: none !important; }
     .acc-panel, .acc-icon, .lift, .step-num, .step-line { transition: none !important; }
     .js .step-line { transform: none !important; }
     .lift:hover { transform: none !important; }

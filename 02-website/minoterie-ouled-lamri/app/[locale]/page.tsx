@@ -28,8 +28,9 @@ export default async function Home({ params }: Props) {
   return (
     <>
       {/* ------------------------------------------------------------ Hero */}
-      <section className="relative overflow-hidden">
-        <div className="wrap grid items-center gap-12 pb-16 pt-8 md:pt-14 lg:grid-cols-12 lg:gap-8 lg:pb-28 lg:pt-16">
+      {/* Desktop: fills the screen under the header, wider than the page container */}
+      <section className="relative flex flex-col overflow-hidden lg:min-h-[calc(100svh-72px)]">
+        <div className="mx-auto grid w-full max-w-[1440px] flex-1 items-center gap-12 px-5 pb-12 pt-8 md:px-8 md:pt-14 lg:grid-cols-12 lg:gap-10 lg:py-10 xl:px-14">
           <div className="lg:col-span-7">
             <p className="eyebrow fade-in" style={{ ['--d' as string]: '100ms' }}>
               <Star />
@@ -69,9 +70,16 @@ export default async function Home({ params }: Props) {
             </p>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[340px] sm:max-w-[420px] lg:col-span-5 lg:max-w-[520px]">
+          <div className="relative mx-auto w-full max-w-[340px] sm:max-w-[420px] lg:col-span-5 lg:max-w-[min(580px,64svh)]">
             <Seal id="hero-seal" animate className="h-auto w-full" title={`${site.brand} — ${site.company}`} />
           </div>
+        </div>
+
+        {/* Separator: the logo's star with two gold rules growing away from it */}
+        <div aria-hidden="true" className="mx-auto flex w-full max-w-[1440px] items-center gap-5 px-5 pb-8 md:px-8 lg:pb-10 xl:px-14">
+          <span className="sep-line sep-line--start" />
+          <Star className="sep-star h-3.5 w-3.5 flex-none text-gold" />
+          <span className="sep-line sep-line--end" />
         </div>
       </section>
 

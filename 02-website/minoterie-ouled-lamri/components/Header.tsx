@@ -74,10 +74,10 @@ export function Header({ locale, t, nav }: { locale: Locale; t: Dict; nav: NavIt
       </a>
 
       <header
-        className={`sticky top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-300 ${
-          scrolled || open ? 'border-line bg-cream' : 'border-transparent bg-cream'
-        }`}
+        className={`header-in sticky top-0 z-50 bg-cream transition-shadow duration-300 ${scrolled && !open ? 'shadow-[0_6px_18px_-12px_rgba(58,37,22,0.35)]' : ''}`}
       >
+        {/* Thin gold rule under the bar: draws from the centre outward on load */}
+        <span aria-hidden="true" className="header-rule pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gold" />
         <div className="wrap flex h-[72px] items-center justify-between gap-4">
           <Logo href={`/${locale}`} label={t.nav.homeLabel} />
 
@@ -108,14 +108,14 @@ export function Header({ locale, t, nav }: { locale: Locale; t: Dict; nav: NavIt
 
           <div className="flex items-center gap-2">
             <LangSwitch locale={locale} rest={rest} label={t.nav.language} />
-            <a href={telHref} className="btn btn-call hidden !min-h-[44px] !px-4 sm:inline-flex">
+            <a href={telHref} className="btn btn-call hidden !min-h-0 h-10 gap-2 !rounded-pill !px-4 text-[0.9rem] sm:inline-flex [&_svg]:!h-4 [&_svg]:!w-4">
               <Icon name="phone" />
               <span className="ltr">{site.phoneDisplay}</span>
             </a>
             <button
               ref={toggleRef}
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md lg:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-pill transition-colors hover:bg-gold-tint lg:hidden"
               aria-expanded={open}
               aria-controls="drawer"
               aria-label={open ? t.nav.close : t.nav.menu}
@@ -173,7 +173,7 @@ export function Header({ locale, t, nav }: { locale: Locale; t: Dict; nav: NavIt
 function LangSwitch({ locale, rest, label }: { locale: Locale; rest: string; label: string }) {
   // Visual order FR | AR in both directions (design system RTL rule)
   return (
-    <div dir="ltr" role="group" aria-label={label} className="relative flex rounded-pill border-[1.5px] border-border-strong p-[3px]">
+    <div dir="ltr" role="group" aria-label={label} className="relative flex h-10 items-center rounded-pill border border-border-strong p-[3px]">
       <span
         aria-hidden="true"
         className="absolute bottom-[3px] top-[3px] w-[calc(50%-3px)] rounded-pill bg-brown transition-transform duration-300 ease-out motion-reduce:transition-none"
@@ -186,10 +186,10 @@ function LangSwitch({ locale, rest, label }: { locale: Locale; rest: string; lab
           hrefLang={l}
           lang={l}
           aria-current={l === locale ? 'true' : undefined}
-          className={`relative z-[1] inline-flex h-[44px] min-w-[44px] items-center justify-center rounded-pill px-2 text-sm font-semibold no-underline transition-colors duration-300 ${
+          className={`relative z-[1] inline-flex h-full min-w-[38px] items-center justify-center rounded-pill px-2 text-[0.8rem] font-semibold tracking-wide no-underline transition-colors duration-300 ${
             l === locale ? 'text-cream' : 'text-ink'
           }`}
-          style={l === 'ar' ? { fontFamily: 'var(--font-arabic)', fontSize: '1rem' } : undefined}
+          style={l === 'ar' ? { fontFamily: 'var(--font-arabic)', fontSize: '0.95rem' } : undefined}
         >
           {l === 'fr' ? 'FR' : 'ع'}
         </Link>
