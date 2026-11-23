@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LA COLOMBE — Technical briefing</title>
+<style>
+:root{--gold:#C08A2E;--brown:#4A3B2A;--cream:#F5EFE6;--paper:#FBF8F2;--ink:#2B2218;--muted:#7A6A55;--line:#DCCFBA;--ok:#4F7A4A;--warn:#B5651D}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--paper);transition:background .35s;overflow:hidden;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;color:var(--ink)}
+.stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform:translate(-50%,-50%) scale(var(--s,1));overflow:hidden}
+body.dk{background:var(--brown)}
+.slide{position:absolute;inset:0;padding:44px 64px 56px;opacity:0;visibility:hidden;transition:opacity .35s}
+.slide.active{opacity:1;visibility:visible}
+.slide.dark{color:var(--cream)}
+.kicker{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600}
+h2{font-family:Georgia,"Times New Roman",serif;font-size:34px;font-weight:600;color:var(--brown);margin-top:6px;letter-spacing:-.01em}
+.sh{height:92px}
+.body{height:510px;position:relative}
+.foot{position:absolute;left:64px;right:64px;bottom:20px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.dark .foot{color:#a99880}
+.foot span:last-child{display:none}
+.code{font-size:12px;line-height:1.42;padding:12px 14px}
+p.lead{font-size:17px;line-height:1.55;color:#4b3f31}
+/* animation */
+.a{opacity:0}
+.slide.active .a{animation:up .6s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--d,0)*70ms + 120ms)}
+.f{opacity:0}
+.slide.active .f{animation:fade .6s ease forwards;animation-delay:calc(var(--d,0)*90ms + 150ms)}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.slide.active .dr{animation:dr 1s ease forwards;animation-delay:calc(var(--d,0)*90ms + 150ms)}
+.gr{transform-box:fill-box;transform-origin:center bottom;transform:scaleY(0)}
+.slide.active .gr{animation:grow .8s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--d,0)*90ms + 150ms)}
+.gx{transform-box:fill-box;transform-origin:left center;transform:scaleX(0)}
+.slide.active .gx{animation:growx .8s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--d,0)*90ms + 150ms)}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fade{to{opacity:1}}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes grow{to{transform:scaleY(1)}}
+@keyframes growx{to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.a,.f{opacity:1!important;animation:none!important}.dr{stroke-dashoffset:0!important;animation:none!important}.gr,.gx{transform:none!important;animation:none!important}}
+/* svg text */
+svg text{font-family:"Segoe UI",system-ui,sans-serif;fill:var(--ink)}
+.t-s{font-size:12px}.t-m{font-size:14px}.t-l{font-size:16px;font-weight:600}.t-c{text-anchor:middle}.t-w,.t-w text{fill:#fff}.t-g{fill:var(--muted)}
+.box{fill:#fff;stroke:var(--line);stroke-width:1.5}
+.boxd{fill:var(--brown);stroke:none}
+.boxg{fill:#F6E9CF;stroke:var(--gold);stroke-width:1.5}
+.ln{fill:none;stroke:var(--brown);stroke-width:2}
+.lng{fill:none;stroke:var(--gold);stroke-width:2.5}
+.lnd{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-dasharray:6 5}
+/* cards */
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px}
+.card h3{font-size:16px;color:var(--brown);margin-bottom:8px}
+.card li{font-size:14px;line-height:1.5;margin-left:18px;color:#4b3f31}
+.chip{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.04em;background:#F6E9CF;color:#7a5410}
+.chip.ok{background:#E3EEDF;color:#3b6336}.chip.no{background:#F3DDD0;color:#8a4410}.chip.gy{background:#ECE6DA;color:#6a5b46}
+.prop{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle}
+code,.code{font-family:Consolas,"Courier New",monospace;font-size:13px}
+.code{background:#2B2218;color:#F5EFE6;border-radius:8px;padding:12px 14px;line-height:1.38;white-space:pre}
+.code .k{color:#E0B565}.code .c{color:#9c8e78}
+table.t{border-collapse:collapse;width:100%;font-size:14px}
+table.t th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--brown)}
+table.t td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+table.t td:first-child{font-weight:600;color:var(--brown)}
+/* nav */
+.nav{position:fixed;right:18px;bottom:14px;display:flex;gap:8px;align-items:center;z-index:9;opacity:.55;transition:opacity .2s}
+.nav:hover{opacity:1}
+.nav button{background:#2B2218;color:#F5EFE6;border:1px solid #5a4a38;width:34px;height:34px;border-radius:6px;font-size:16px;cursor:pointer}
+.nav span{color:#cbbda6;font-size:12px;min-width:48px;text-align:center}
+.bar{position:fixed;left:0;top:0;height:3px;background:var(--gold);width:0;z-index:9;transition:width .3s}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4A3B2A"/></marker>
+<marker id="arg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C08A2E"/></marker>
+</defs></svg>
+<div class="bar" id="bar"></div>
+<div class="stage" id="stage">
+
+<!-- 1 COVER -->
+<section class="slide dark active">
+  <div style="position:absolute;left:64px;top:190px;width:720px">
+    <p class="kicker a" style="--d:0">Technical briefing · Showcase website</p>
+    <h1 class="a" style="--d:1;font-family:Georgia,serif;font-size:96px;font-weight:600;letter-spacing:.02em;margin-top:18px;line-height:1">LA COLOMBE</h1>
+    <p class="a" style="--d:2;font-size:26px;margin-top:18px;color:#E7D7B8">SARL Minoterie Ouled Lamri</p>
+    <div class="a" style="--d:3;width:90px;height:3px;background:var(--gold);margin:28px 0"></div>
+    <p class="a" style="--d:4;font-size:17px;line-height:1.6;color:#cbbda6;max-width:560px">The client, the website, and the back-end work, in one pass. Bordj Bou Arréridj · Next.js · French and Arabic (RTL).</p>
+  </div>
+  <div class="foot"><span>Project briefing</span><span>01</span></div>
+</section>
+
+<!-- 2 AT A GLANCE -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">01 · Overview</p><h2 class="a" style="--d:1">The project at a glance</h2></div>
+  <div class="body">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+      <div class="card a" style="--d:2;text-align:center"><div class="n" style="font-family:Georgia,serif;font-size:64px;color:var(--gold);line-height:1">7</div><div style="font-weight:600;margin-top:8px;color:var(--brown)">Pages</div><div style="font-size:13px;color:var(--muted);margin-top:4px">Home + 6 inner pages</div></div>
+      <div class="card a" style="--d:3;text-align:center"><div style="font-family:Georgia,serif;font-size:64px;color:var(--gold);line-height:1">2</div><div style="font-weight:600;margin-top:8px;color:var(--brown)">Languages</div><div style="font-size:13px;color:var(--muted);margin-top:4px">French · Arabic (RTL)</div></div>
+      <div class="card a" style="--d:4;text-align:center"><div style="font-family:Georgia,serif;font-size:64px;color:var(--gold);line-height:1">3</div><div style="font-weight:600;margin-top:8px;color:var(--brown)">Contact channels</div><div style="font-size:13px;color:var(--muted);margin-top:4px">Phone · WhatsApp · Form</div></div>
+      <div class="card a" style="--d:5;text-align:center"><div style="font-family:Georgia,serif;font-size:64px;color:var(--gold);line-height:1">0</div><div style="font-weight:600;margin-top:8px;color:var(--brown)">E-commerce</div><div style="font-size:13px;color:var(--muted);margin-top:4px">Showcase only</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px">
+      <div class="card a" style="--d:6"><h3>In scope</h3><ul><li>Company and flour ranges presentation</li><li>Quality reassurance: about, gallery, FAQ, testimonials</li><li>Direct contact: tel link, WhatsApp, email form</li><li>Bilingual FR / AR with automatic RTL</li><li>Basic SEO and mobile-first performance</li></ul></div>
+      <div class="card a" style="--d:7"><h3>Out of scope</h3><ul><li>Online shop, cart, payments</li><li>User accounts</li><li>CMS or admin panel: content lives in versioned files</li><li>Google Business integration (no listing exists)</li></ul></div>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>02</span></div>
+</section>
+
+<!-- 3 CLIENT -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">02 · The client</p><h2 class="a" style="--d:1">Who the website is for</h2></div>
+  <div class="body" style="display:grid;grid-template-columns:430px 1fr;gap:36px">
+    <div class="card a" style="--d:2">
+      <table class="t">
+        <tr><td style="width:120px">Company</td><td>SARL Minoterie Ouled Lamri</td></tr>
+        <tr><td>Brand</td><td>LA COLOMBE</td></tr>
+        <tr><td>Sector</td><td>Flour milling (minoterie)</td></tr>
+        <tr><td>Location</td><td>Bir Aissa, Commune Ain Tasserra, Wilaya de Bordj Bou Arréridj</td></tr>
+        <tr><td>Phone / WhatsApp</td><td>0661370011</td></tr>
+        <tr><td>Email</td><td style="word-break:break-all">contact.minoterie@ouled-lamri.com</td></tr>
+        <tr><td>Preferred contact</td><td><span class="chip">Phone</span></td></tr>
+        <tr><td>Site languages</td><td>French, Arabic</td></tr>
+      </table>
+    </div>
+    <div>
+      <p class="t-l a" style="--d:3;font-weight:600;color:var(--brown);margin-bottom:6px">Opening hours</p>
+      <svg viewBox="0 0 680 340" width="100%">
+        <g class="t-s t-g" text-anchor="middle">
+          <text x="90" y="24" class="f" style="--d:3">6h</text><text x="183.3" y="24" class="f" style="--d:3">8h</text><text x="276.7" y="24" class="f" style="--d:3">10h</text><text x="370" y="24" class="f" style="--d:3">12h</text><text x="463.3" y="24" class="f" style="--d:3">14h</text><text x="556.7" y="24" class="f" style="--d:3">16h</text><text x="650" y="24" class="f" style="--d:3">18h</text>
+        </g>
+        <g stroke="#DCCFBA" stroke-width="1"><path d="M90 34V330M183.3 34V330M276.7 34V330M370 34V330M463.3 34V330M556.7 34V330M650 34V330"/></g>
+        <g class="t-m">
+          <text x="0" y="62">Saturday</text><text x="0" y="106">Sunday</text><text x="0" y="150">Monday</text><text x="0" y="194">Tuesday</text><text x="0" y="238">Wednesday</text><text x="0" y="282">Thursday</text><text x="0" y="326">Friday</text>
+        </g>
+        <g fill="#C08A2E">
+          <rect class="gx" x="183.3" y="44" width="373.4" height="28" rx="5" style="--d:4"/>
+          <rect class="gx" x="183.3" y="88" width="373.4" height="28" rx="5" style="--d:5"/>
+          <rect class="gx" x="183.3" y="132" width="373.4" height="28" rx="5" style="--d:6"/>
+          <rect class="gx" x="183.3" y="176" width="373.4" height="28" rx="5" style="--d:7"/>
+          <rect class="gx" x="183.3" y="220" width="373.4" height="28" rx="5" style="--d:8"/>
+          <rect class="gx" x="183.3" y="264" width="186.7" height="28" rx="5" style="--d:9"/>
+        </g>
+        <rect class="f" x="183.3" y="308" width="373.4" height="28" rx="5" fill="none" stroke="#7A6A55" stroke-dasharray="5 4" style="--d:10"/>
+        <text class="f t-s t-g" x="370" y="327" text-anchor="middle" style="--d:10">Closed</text>
+        <g class="t-s t-w t-c" font-weight="600"><text x="370" y="62" class="f" style="--d:6">8:00 – 16:00</text><text x="370" y="106" class="f" style="--d:6">8:00 – 16:00</text><text x="370" y="150" class="f" style="--d:7">8:00 – 16:00</text><text x="370" y="194" class="f" style="--d:8">8:00 – 16:00</text><text x="370" y="238" class="f" style="--d:9">8:00 – 16:00</text><text x="276.7" y="282" class="f" style="--d:10">8:00 – 12:00</text></g>
+      </svg>
+      <p class="lead a" style="--d:11;margin-top:6px;font-size:14px">The hours appear on the contact page and in the footer, and feed the structured data.</p>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>03</span></div>
+</section>
+
+<!-- 4 GOALS -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">03 · Purpose</p><h2 class="a" style="--d:1">One site, three jobs</h2></div>
+  <div class="body">
+    <svg viewBox="0 0 1152 330" width="100%">
+      <g>
+        <rect class="f box" x="0" y="40" width="340" height="230" rx="12" style="--d:2"/>
+        <rect class="f box" x="406" y="40" width="340" height="230" rx="12" style="--d:4"/>
+        <rect class="f boxd" x="812" y="40" width="340" height="230" rx="12" style="--d:6"/>
+      </g>
+      <path class="dr lng" pathLength="1" d="M344 155H402" marker-end="url(#arg)" style="--d:3"/>
+      <path class="dr lng" pathLength="1" d="M750 155H808" marker-end="url(#arg)" style="--d:5"/>
+      <g class="f" style="--d:2"><circle cx="48" cy="92" r="22" fill="#C08A2E"/><text x="48" y="99" class="t-l t-w t-c">1</text><text x="30" y="150" class="t-l" style="font-size:22px;font-family:Georgia,serif">Present</text><text x="30" y="182" class="t-m t-g">The company, its mill and its</text><text x="30" y="204" class="t-m t-g">flour ranges, clearly and fast.</text></g>
+      <g class="f" style="--d:4"><circle cx="454" cy="92" r="22" fill="#C08A2E"/><text x="454" y="99" class="t-l t-w t-c">2</text><text x="436" y="150" class="t-l" style="font-size:22px;font-family:Georgia,serif">Reassure</text><text x="436" y="182" class="t-m t-g">Quality and trust through real</text><text x="436" y="204" class="t-m t-g">photos, story, FAQ, reviews.</text></g>
+      <g class="f" style="--d:6"><circle cx="860" cy="92" r="22" fill="#C08A2E"/><text x="860" y="99" class="t-l t-w t-c">3</text><text x="842" y="150" class="t-l" style="font-size:22px;font-family:Georgia,serif;fill:#F5EFE6">Convert</text><text x="842" y="182" class="t-m" style="fill:#d9ccb4">Push the visitor to call or</text><text x="842" y="204" class="t-m" style="fill:#d9ccb4">write directly. Phone first.</text></g>
+    </svg>
+    <p class="lead a" style="--d:8;max-width:880px">Success metric: contact actions. Every page ends with a visible way to call, message on WhatsApp, or send the form.</p>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>04</span></div>
+</section>
+
+<!-- 5 JOURNEY -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">04 · Visitor journey</p><h2 class="a" style="--d:1">From first visit to first call</h2></div>
+  <div class="body">
+    <svg viewBox="0 0 1152 470" width="100%">
+      <rect class="f box" x="0" y="190" width="160" height="90" rx="10" style="--d:2"/>
+      <text class="f t-l t-c" x="80" y="228" style="--d:2">Visitor</text><text class="f t-s t-g t-c" x="80" y="250" style="--d:2">mostly on mobile</text>
+      <rect class="f boxg" x="220" y="190" width="150" height="90" rx="10" style="--d:3"/>
+      <text class="f t-l t-c" x="295" y="228" style="--d:3">Home</text><text class="f t-s t-g t-c" x="295" y="250" style="--d:3">hero + quick contact</text>
+      <path class="dr ln" pathLength="1" d="M160 235H216" marker-end="url(#ar)" style="--d:3"/>
+      <path class="dr ln" pathLength="1" d="M370 235H446" marker-end="url(#ar)" style="--d:4"/>
+      <rect class="f" x="450" y="20" width="250" height="430" rx="14" fill="#fff" stroke="#DCCFBA" stroke-width="1.5" style="--d:4"/>
+      <text class="f t-s t-g" x="475" y="50" style="--d:4;letter-spacing:.1em">TRUST-BUILDING PAGES</text>
+      <g class="f" style="--d:5"><rect class="box" x="475" y="70" width="200" height="54" rx="8"/><text class="t-m" x="490" y="94">Products</text><text class="t-s t-g" x="490" y="112">ranges and uses</text></g>
+      <g class="f" style="--d:6"><rect class="box" x="475" y="140" width="200" height="54" rx="8"/><text class="t-m" x="490" y="164">About</text><text class="t-s t-g" x="490" y="182">story, know-how</text></g>
+      <g class="f" style="--d:7"><rect class="box" x="475" y="210" width="200" height="54" rx="8"/><text class="t-m" x="490" y="234">Gallery</text><text class="t-s t-g" x="490" y="252">mill and production</text></g>
+      <g class="f" style="--d:8"><rect class="box" x="475" y="280" width="200" height="54" rx="8"/><text class="t-m" x="490" y="304">FAQ</text><text class="t-s t-g" x="490" y="322">delivery, quantities</text></g>
+      <g class="f" style="--d:9"><rect x="475" y="350" width="200" height="54" rx="8" fill="#fff" stroke="#7A6A55" stroke-dasharray="5 4"/><text class="t-m" x="490" y="374">Testimonials</text><text class="t-s t-g" x="490" y="392">only when content exists</text></g>
+      <path class="dr lng" pathLength="1" d="M700 235H796" marker-end="url(#arg)" style="--d:9"/>
+      <path class="lnd f" d="M295 190V22H770V60H796" marker-end="url(#arg)" style="--d:5"/>
+      <text class="f t-s t-g" x="520" y="14" style="--d:5">shortcut: quick contact block on the home page</text>
+      <g class="f" style="--d:10"><rect class="boxd" x="800" y="40" width="352" height="100" rx="10"/><text class="t-l" x="822" y="76" style="fill:#F5EFE6">Call</text><text class="t-s" x="822" y="100" style="fill:#d9ccb4">tel: link, primary action on mobile</text><text class="t-s" x="822" y="120" style="fill:#d9ccb4">preferred channel of the client</text></g>
+      <g class="f" style="--d:11"><rect class="boxd" x="800" y="175" width="352" height="100" rx="10"/><text class="t-l" x="822" y="211" style="fill:#F5EFE6">WhatsApp</text><text class="t-s" x="822" y="235" style="fill:#d9ccb4">floating button on every page</text><text class="t-s" x="822" y="255" style="fill:#d9ccb4">wa.me deep link</text></g>
+      <g class="f" style="--d:12"><rect class="boxd" x="800" y="310" width="352" height="100" rx="10"/><text class="t-l" x="822" y="346" style="fill:#F5EFE6">Contact form</text><text class="t-s" x="822" y="370" style="fill:#d9ccb4">only dynamic feature, sends an email</text><text class="t-s" x="822" y="390" style="fill:#d9ccb4">needs the back end</text></g>
+    </svg>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>05</span></div>
+</section>
+
+<!-- 6 SITEMAP -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">05 · Website · Structure</p><h2 class="a" style="--d:1">Sitemap and routes</h2></div>
+  <div class="body">
+    <svg viewBox="0 0 1152 480" width="100%">
+      <rect class="f boxd" x="476" y="0" width="200" height="50" rx="10" style="--d:2"/>
+      <text class="f t-l t-c" x="576" y="31" style="--d:2;fill:#F5EFE6">app/[locale]</text>
+      <g class="f" style="--d:3"><rect x="300" y="8" width="130" height="34" rx="17" class="boxg"/><text x="365" y="30" class="t-m t-c">/fr · LTR</text><rect x="722" y="8" width="130" height="34" rx="17" class="boxg"/><text x="787" y="30" class="t-m t-c">/ar · RTL</text></g>
+      <path class="dr ln" pathLength="1" d="M476 25H434" style="--d:3"/><path class="dr ln" pathLength="1" d="M676 25H718" style="--d:3"/>
+      <g class="ln">
+        <path class="dr" pathLength="1" d="M576 50V90" style="--d:4"/>
+        <path class="dr" pathLength="1" d="M70 90H1082" style="--d:4"/>
+        <path class="dr" pathLength="1" d="M70 90V110M235 90V110M400 90V110M565 90V110M730 90V110M895 90V110M1082 90V110" style="--d:5"/>
+      </g>
+      <!-- 7 nodes -->
+      <g class="f" style="--d:5"><rect class="boxg" x="0" y="110" width="140" height="50" rx="8"/><text class="t-m t-c" x="70" y="141">/ (Home)</text></g>
+      <g class="f" style="--d:6"><rect class="box" x="165" y="110" width="140" height="50" rx="8"/><text class="t-m t-c" x="235" y="141">/a-propos</text></g>
+      <g class="f" style="--d:7"><rect class="box" x="330" y="110" width="140" height="50" rx="8"/><text class="t-m t-c" x="400" y="141">/produits</text></g>
+      <g class="f" style="--d:8"><rect class="box" x="495" y="110" width="140" height="50" rx="8"/><text class="t-m t-c" x="565" y="141">/galerie</text></g>
+      <g class="f" style="--d:9"><rect x="660" y="110" width="140" height="50" rx="8" fill="#fff" stroke="#7A6A55" stroke-dasharray="5 4"/><text class="t-m t-c" x="730" y="141">/temoignages</text></g>
+      <g class="f" style="--d:10"><rect class="box" x="825" y="110" width="140" height="50" rx="8"/><text class="t-m t-c" x="895" y="141">/faq</text></g>
+      <g class="f" style="--d:11"><rect class="boxg" x="1012" y="110" width="140" height="50" rx="8"/><text class="t-m t-c" x="1082" y="141">/contact</text></g>
+      <!-- details -->
+      <g class="t-s t-g" text-anchor="middle">
+        <g class="f" style="--d:6"><text x="70" y="190">hero, strengths</text><text x="70" y="208">previews, quick contact</text></g>
+        <g class="f" style="--d:7"><text x="235" y="190">story, know-how</text><text x="235" y="208">values, location</text></g>
+        <g class="f" style="--d:8"><text x="400" y="190">cards by flour range</text><text x="400" y="208">content/products.ts</text></g>
+        <g class="f" style="--d:9"><text x="565" y="190">photo grid, lightbox</text><text x="565" y="208">public/images/gallery</text></g>
+        <g class="f" style="--d:10"><text x="730" y="190">hidden while empty</text><text x="730" y="208">content/testimonials.ts</text></g>
+        <g class="f" style="--d:11"><text x="895" y="190">accordion</text><text x="895" y="208">content/faq.ts</text></g>
+        <g class="f" style="--d:12"><text x="1082" y="190">form, map, hours</text><text x="1082" y="208">WhatsApp, social</text></g>
+      </g>
+      <g class="f" style="--d:12">
+        <rect x="0" y="260" width="1152" height="210" rx="12" fill="#fff" stroke="#DCCFBA"/>
+        <text x="24" y="292" class="t-l">Routing rules</text>
+        <text x="24" y="322" class="t-m">• Every route exists under both locales: /fr/produits and /ar/produits.</text>
+        <text x="24" y="348" class="t-m">• Switching language keeps the visitor on the same page.</text>
+        <text x="24" y="374" class="t-m">• Testimonials: if the content array is empty, the route stays out of the menu, the sitemap and the home page.</text>
+        <text x="24" y="400" class="t-m">• Products are one single page with one card section per range, easier to maintain than one page per range.</text>
+        <text x="24" y="426" class="t-m">• Each page owns its metadata (title, description) in both languages.</text>
+      </g>
+    </svg>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>06</span></div>
+</section>
+
+<!-- 7 HOME ANATOMY -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">06 · Website · Home page</p><h2 class="a" style="--d:1">Anatomy of the home page</h2></div>
+  <div class="body" style="display:grid;grid-template-columns:380px 1fr;gap:40px">
+    <div class="a" style="--d:2;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;height:500px;display:flex;flex-direction:column;gap:6px">
+      <div style="height:28px;background:var(--brown);border-radius:5px;display:flex;align-items:center;padding:0 10px;color:#F5EFE6;font-size:11px;justify-content:space-between"><b>① logo</b><span>nav · FR|AR · call</span></div>
+      <div style="height:92px;background:linear-gradient(135deg,#E8D3A8,#C08A2E);border-radius:5px;display:flex;align-items:center;padding:0 12px;font-size:12px;font-weight:700;color:#3a2c18">② Hero · hook · Call · WhatsApp</div>
+      <div style="height:48px;background:#F6E9CF;border-radius:5px;display:flex;align-items:center;justify-content:space-around;font-size:11px;font-weight:700;color:#5b4520">③ <span>◯ point</span><span>◯ point</span><span>◯ point</span></div>
+      <div style="height:78px;background:#fff;border:1px solid var(--line);border-radius:5px;display:flex;align-items:center;gap:6px;padding:0 8px;font-size:11px;font-weight:700"><span style="color:var(--gold)">④</span><div style="flex:1;height:50px;background:#ECE6DA;border-radius:4px"></div><div style="flex:1;height:50px;background:#ECE6DA;border-radius:4px"></div><div style="flex:1;height:50px;background:#ECE6DA;border-radius:4px"></div></div>
+      <div style="height:62px;background:#fff;border:1px solid var(--line);border-radius:5px;display:flex;align-items:center;gap:6px;padding:0 8px;font-size:11px;font-weight:700"><span style="color:var(--gold)">⑤</span><div style="flex:1;height:36px;background:#ECE6DA;border-radius:4px"></div><div style="flex:1;height:36px;background:#ECE6DA;border-radius:4px"></div><div style="flex:1;height:36px;background:#ECE6DA;border-radius:4px"></div><div style="flex:1;height:36px;background:#ECE6DA;border-radius:4px"></div></div>
+      <div style="height:42px;border:1.5px dashed var(--muted);border-radius:5px;display:flex;align-items:center;padding:0 12px;font-size:11px;font-weight:700;color:var(--muted)">⑥ Testimonials band (conditional)</div>
+      <div style="height:50px;background:var(--brown);border-radius:5px;display:flex;align-items:center;padding:0 12px;font-size:11px;font-weight:700;color:#F5EFE6">⑦ Quick contact · phone · WhatsApp · hours</div>
+      <div style="height:34px;background:#ECE6DA;border-radius:5px;display:flex;align-items:center;padding:0 12px;font-size:11px;font-weight:700">⑧ Footer</div>
+    </div>
+    <div class="a" style="--d:3">
+      <table class="t">
+        <tr><th style="width:36px">#</th><th>Block</th><th>Source</th><th>Behaviour</th></tr>
+        <tr><td>1</td><td>Header</td><td>messages, site.ts</td><td>Sticky, language switch, call button</td></tr>
+        <tr><td>2</td><td>Hero</td><td>messages, hero image</td><td>Two CTAs above the fold on mobile</td></tr>
+        <tr><td>3</td><td>Strengths</td><td>messages</td><td>3–4 icon points, text from client input</td></tr>
+        <tr><td>4</td><td>Products preview</td><td>products.ts</td><td>First 3 ranges, link to /produits</td></tr>
+        <tr><td>5</td><td>Gallery preview</td><td>gallery folder</td><td>4–6 photos, link to /galerie</td></tr>
+        <tr><td>6</td><td>Testimonials</td><td>testimonials.ts</td><td>Not rendered when array is empty</td></tr>
+        <tr><td>7</td><td>Quick contact</td><td>site.ts</td><td>tel and wa.me links, hours</td></tr>
+        <tr><td>8</td><td>Footer</td><td>site.ts</td><td>Address, social, quick links</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>07</span></div>
+</section>
+
+<!-- 8 INNER PAGES -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">07 · Website · Inner pages</p><h2 class="a" style="--d:1">What each page contains</h2></div>
+  <div class="body">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <div class="card a" style="--d:2"><h3>/a-propos</h3><ul><li>Company story</li><li>Milling know-how</li><li>Values</li><li>Location in Bordj Bou Arréridj</li></ul><p style="margin-top:10px"><span class="chip gy">content/about.ts</span> <span class="chip no">texts pending</span></p></div>
+      <div class="card a" style="--d:3"><h3>/produits</h3><ul><li>One card section per flour range</li><li>Image, name, use, packaging</li><li>CTA to contact for a quote</li></ul><p style="margin-top:10px"><span class="chip gy">content/products.ts</span> <span class="chip no">list pending</span></p></div>
+      <div class="card a" style="--d:4"><h3>/galerie</h3><ul><li>Photos of mill, production, products</li><li>Responsive grid, lightbox</li><li>next/image with fixed ratios</li></ul><p style="margin-top:10px"><span class="chip gy">public/images/gallery</span> <span class="chip">partial</span></p></div>
+      <div class="card a" style="--d:5"><h3>/temoignages</h3><ul><li>Customer reviews as cards</li><li>Hidden from menu while empty</li><li>Page ready, no placeholder shown</li></ul><p style="margin-top:10px"><span class="chip gy">content/testimonials.ts</span> <span class="chip gy">none yet</span></p></div>
+      <div class="card a" style="--d:6"><h3>/faq</h3><ul><li>Delivery, quantities, served areas</li><li>Accessible accordion</li><li>Generic draft to validate</li></ul><p style="margin-top:10px"><span class="chip gy">content/faq.ts</span> <span class="chip">to validate</span></p></div>
+      <div class="card a" style="--d:7"><h3>/contact</h3><ul><li>Form: name, phone, email, subject, message</li><li>Address, hours, WhatsApp button</li><li>Static map, social links</li></ul><p style="margin-top:10px"><span class="chip gy">site.ts + Server Action</span> <span class="chip ok">spec ready</span></p></div>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>08</span></div>
+</section>
+
+<!-- 9 CONTACT FLOW -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">08 · Website · Contact form</p><h2 class="a" style="--d:1">Contact form flow</h2></div>
+  <div class="body" style="display:grid;grid-template-columns:1fr 330px;gap:26px">
+    <svg viewBox="0 0 740 500" width="100%">
+      <g class="t-l t-c">
+        <g class="f" style="--d:2"><rect class="boxd" x="10" y="0" width="150" height="40" rx="8"/><text x="85" y="26" style="fill:#F5EFE6">Browser</text></g>
+        <g class="f" style="--d:2"><rect class="boxd" x="205" y="0" width="150" height="40" rx="8"/><text x="280" y="26" style="fill:#F5EFE6">Server Action</text></g>
+        <g class="f" style="--d:2"><rect class="boxd" x="400" y="0" width="150" height="40" rx="8"/><text x="475" y="26" style="fill:#F5EFE6">Email provider</text></g>
+        <g class="f" style="--d:2"><rect class="boxd" x="590" y="0" width="140" height="40" rx="8"/><text x="660" y="26" style="fill:#F5EFE6">Company inbox</text></g>
+      </g>
+      <g stroke="#DCCFBA" stroke-dasharray="4 4"><path d="M85 40V490M280 40V490M475 40V490M660 40V490"/></g>
+      <path class="dr ln" pathLength="1" d="M85 85H276" marker-end="url(#ar)" style="--d:3"/>
+      <text class="f t-s t-c" x="180" y="77" style="--d:3">1 submit(formData)</text>
+      <g class="f" style="--d:4"><rect class="boxg" x="300" y="105" width="150" height="86" rx="8"/><text class="t-s" x="312" y="126">2 on the server:</text><text class="t-s" x="312" y="145">· validate fields</text><text class="t-s" x="312" y="162">· honeypot check</text><text class="t-s" x="312" y="179">· rate limit per IP</text></g>
+      <path class="dr ln" pathLength="1" d="M280 225H471" marker-end="url(#ar)" style="--d:5"/>
+      <text class="f t-s t-c" x="378" y="217" style="--d:5">3 send(email)</text>
+      <path class="dr ln" pathLength="1" d="M475 270H656" marker-end="url(#ar)" style="--d:6"/>
+      <text class="f t-s t-c" x="566" y="262" style="--d:6">4 delivered</text>
+      <path class="dr ln" pathLength="1" d="M471 315H284" marker-end="url(#ar)" style="--d:7"/>
+      <text class="f t-s t-c" x="378" y="307" style="--d:7">5 accepted / error</text>
+      <path class="dr ln" pathLength="1" d="M276 360H89" marker-end="url(#ar)" style="--d:8"/>
+      <text class="f t-s t-c" x="180" y="352" style="--d:8">6 {ok} or {errors}</text>
+      <g class="f" style="--d:9"><rect class="box" x="10" y="395" width="170" height="38" rx="8"/><text class="t-s" x="22" y="419">Success message (FR / AR)</text><rect class="box" x="10" y="445" width="170" height="38" rx="8"/><text class="t-s" x="22" y="469">Inline field errors, localized</text></g>
+      <g class="f" style="--d:9"><rect x="205" y="395" width="260" height="88" rx="8" fill="none" stroke="#B5651D" stroke-dasharray="5 4"/><text class="t-s" x="217" y="417" style="fill:#B5651D;font-weight:600">Failure paths</text><text class="t-s" x="217" y="438">validation error → errors per field</text><text class="t-s" x="217" y="456">spam → silent success, no email sent</text><text class="t-s" x="217" y="474">provider down → generic error + retry</text></g>
+    </svg>
+    <div class="card a" style="--d:3;align-self:start">
+      <h3>Fields</h3>
+      <table class="t" style="font-size:13px">
+        <tr><th>Field</th><th>Rule</th></tr>
+        <tr><td>name</td><td>required</td></tr>
+        <tr><td>phone</td><td>required, Algerian format <span class="prop">proposed</span></td></tr>
+        <tr><td>email</td><td>optional, valid format <span class="prop">proposed</span></td></tr>
+        <tr><td>subject</td><td>optional / select <span class="prop">proposed</span></td></tr>
+        <tr><td>message</td><td>required, length limit <span class="prop">proposed</span></td></tr>
+        <tr><td>website</td><td>hidden honeypot, must stay empty <span class="prop">proposed</span></td></tr>
+      </table>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px">Fields come from the client questionnaire. Required/optional rules are proposals to confirm.</p>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>09</span></div>
+</section>
+
+<!-- 10 GLOBAL -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">09 · Website · Shared elements</p><h2 class="a" style="--d:1">Elements present on every page</h2></div>
+  <div class="body" style="display:grid;grid-template-columns:300px 1fr;gap:50px">
+    <svg viewBox="0 0 260 500" style="height:490px;width:auto">
+      <rect class="f" x="20" y="0" width="220" height="490" rx="28" fill="#fff" stroke="#4A3B2A" stroke-width="3" style="--d:2"/>
+      <g class="f" style="--d:3"><rect x="34" y="20" width="192" height="34" rx="6" fill="#4A3B2A"/><text x="46" y="42" class="t-s" style="fill:#F5EFE6">logo</text><text x="176" y="42" class="t-s" style="fill:#F5EFE6">FR | AR  ☰</text></g>
+      <g class="f" style="--d:4"><rect x="34" y="66" width="192" height="120" rx="6" fill="#E8D3A8"/><text x="46" y="130" class="t-s">hero</text></g>
+      <g class="f" style="--d:5"><rect x="34" y="198" width="192" height="60" rx="6" fill="#ECE6DA"/><rect x="34" y="270" width="192" height="60" rx="6" fill="#ECE6DA"/><rect x="34" y="342" width="192" height="60" rx="6" fill="#ECE6DA"/></g>
+      <g class="f" style="--d:6"><rect x="34" y="414" width="192" height="50" rx="6" fill="#4A3B2A"/><text x="46" y="443" class="t-s" style="fill:#F5EFE6">footer</text></g>
+      <g class="f" style="--d:7"><circle cx="196" cy="400" r="22" fill="#4F7A4A"/><text x="196" y="405" class="t-s t-c t-w" font-weight="700">WA</text></g>
+    </svg>
+    <div>
+      <table class="t a" style="--d:3">
+        <tr><th>Element</th><th>Detail</th></tr>
+        <tr><td>Floating WhatsApp button</td><td>Fixed at the end corner (bottom-right in FR, bottom-left in AR). Opens <code>wa.me/213661370011</code></td></tr>
+        <tr><td>Language switcher</td><td>Header. Same page, other locale. Updates <code>lang</code> and <code>dir</code></td></tr>
+        <tr><td>Click-to-call</td><td>Every phone number is a <code>tel:+213661370011</code> link</td></tr>
+        <tr><td>Header / footer</td><td>Shared layout, data from <code>site.ts</code></td></tr>
+        <tr><td>Social links</td><td>Facebook and Instagram, URLs to collect</td></tr>
+        <tr><td>Static map</td><td>Image from coordinates, address text beside it. No Google Business listing</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>10</span></div>
+</section>
+
+<!-- 11 I18N -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">10 · Website · Languages</p><h2 class="a" style="--d:1">French and Arabic, LTR and RTL</h2></div>
+  <div class="body">
+    <svg viewBox="0 0 1152 220" width="100%">
+      <g class="f" style="--d:2"><rect class="box" x="0" y="60" width="190" height="90" rx="10"/><text class="t-l t-c" x="95" y="98">Request</text><text class="t-m t-c" x="95" y="124" style="font-family:Consolas,monospace">/ar/produits</text></g>
+      <path class="dr ln" pathLength="1" d="M190 105H250" marker-end="url(#ar)" style="--d:3"/>
+      <g class="f" style="--d:3"><rect class="boxg" x="254" y="60" width="210" height="90" rx="10"/><text class="t-l t-c" x="359" y="98">Middleware</text><text class="t-s t-g t-c" x="359" y="122">next-intl: read locale,</text><text class="t-s t-g t-c" x="359" y="138">redirect if missing</text></g>
+      <path class="dr ln" pathLength="1" d="M464 105H524" marker-end="url(#ar)" style="--d:4"/>
+      <g class="f" style="--d:4"><rect class="box" x="528" y="60" width="210" height="90" rx="10"/><text class="t-l t-c" x="633" y="98">Root layout</text><text class="t-s t-g t-c" x="633" y="122">sets lang="ar" dir="rtl"</text><text class="t-s t-g t-c" x="633" y="138">loads Arabic font</text></g>
+      <path class="dr ln" pathLength="1" d="M738 105H798" marker-end="url(#ar)" style="--d:5"/>
+      <g class="f" style="--d:5"><rect class="box" x="802" y="60" width="170" height="90" rx="10"/><text class="t-l t-c" x="887" y="98">Messages</text><text class="t-s t-g t-c" x="887" y="122">messages/ar.json</text><text class="t-s t-g t-c" x="887" y="138">+ localized content</text></g>
+      <path class="dr ln" pathLength="1" d="M972 105H1032" marker-end="url(#ar)" style="--d:6"/>
+      <g class="f" style="--d:6"><rect class="boxd" x="1036" y="60" width="116" height="90" rx="10"/><text class="t-l t-c" x="1094" y="110" style="fill:#F5EFE6">Page</text></g>
+    </svg>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:6px">
+      <div class="a" style="--d:7">
+        <p style="font-size:12px;letter-spacing:.1em;color:var(--muted);margin-bottom:6px">FRENCH · LTR</p>
+        <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px"><div style="display:flex;justify-content:space-between;background:var(--brown);color:#F5EFE6;font-size:11px;padding:6px 8px;border-radius:4px"><b>logo</b><span>Accueil · Produits · Contact</span></div><div style="height:50px;background:#E8D3A8;margin-top:6px;border-radius:4px;padding:8px;font-size:11px">text aligned left</div><div style="text-align:right;margin-top:6px"><span style="display:inline-block;background:#4F7A4A;color:#fff;border-radius:50%;width:26px;height:26px;text-align:center;line-height:26px;font-size:9px">WA</span></div></div>
+      </div>
+      <div class="a" style="--d:8">
+        <p style="font-size:12px;letter-spacing:.1em;color:var(--muted);margin-bottom:6px">ARABIC · RTL</p>
+        <div dir="rtl" style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px"><div style="display:flex;justify-content:space-between;background:var(--brown);color:#F5EFE6;font-size:11px;padding:6px 8px;border-radius:4px"><b>logo</b><span>الرئيسية · المنتجات · اتصل بنا</span></div><div style="height:50px;background:#E8D3A8;margin-top:6px;border-radius:4px;padding:8px;font-size:11px">text aligned right</div><div style="text-align:left;margin-top:6px"><span style="display:inline-block;background:#4F7A4A;color:#fff;border-radius:50%;width:26px;height:26px;text-align:center;line-height:26px;font-size:9px">WA</span></div></div>
+      </div>
+      <div class="card a" style="--d:9;padding:14px">
+        <h3 style="font-size:14px">Rules</h3>
+        <ul style="font-size:12px"><li>Logical CSS only: <code>ms-</code> <code>me-</code> <code>start-</code> <code>end-</code></li><li>Mirror arrows, never logos or maps</li><li>Phone and email stay LTR inside Arabic text</li><li>Every string exists in both JSON files</li></ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>11</span></div>
+</section>
+
+<!-- 12 ARCHITECTURE -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">11 · Technical · Architecture</p><h2 class="a" style="--d:1">How the pieces fit</h2></div>
+  <div class="body">
+    <svg viewBox="0 0 1152 490" width="100%">
+      <g class="f" style="--d:2"><rect class="boxd" x="0" y="205" width="150" height="90" rx="10"/><text class="t-l t-c" x="75" y="245" style="fill:#F5EFE6">Browser</text><text class="t-s t-c" x="75" y="266" style="fill:#d9ccb4">phone, desktop</text></g>
+      <rect class="f" x="210" y="0" width="620" height="490" rx="14" fill="none" stroke="#7A6A55" stroke-dasharray="6 5" style="--d:2"/>
+      <text class="f t-s t-g" x="226" y="-6" style="--d:2" transform="translate(0 20)">NEXT.JS APPLICATION · hosting suggested: Vercel</text>
+      <g class="f" style="--d:3"><rect class="boxg" x="235" y="40" width="170" height="60" rx="8"/><text class="t-m t-c" x="320" y="66">Middleware</text><text class="t-s t-g t-c" x="320" y="84">next-intl locale routing</text></g>
+      <g class="f" style="--d:4"><rect class="box" x="235" y="130" width="250" height="70" rx="8"/><text class="t-m t-c" x="360" y="157">Pages · app/[locale]/…</text><text class="t-s t-g t-c" x="360" y="177">7 routes, server components</text></g>
+      <g class="f" style="--d:4"><rect class="box" x="520" y="130" width="290" height="70" rx="8"/><text class="t-m t-c" x="665" y="157">Components</text><text class="t-s t-g t-c" x="665" y="177">layout/ and sections/</text></g>
+      <g class="f" style="--d:5"><rect class="box" x="235" y="240" width="170" height="70" rx="8"/><text class="t-m t-c" x="320" y="267">Content</text><text class="t-s t-g t-c" x="320" y="287">content/*.ts</text></g>
+      <g class="f" style="--d:5"><rect class="box" x="425" y="240" width="170" height="70" rx="8"/><text class="t-m t-c" x="510" y="267">Messages</text><text class="t-s t-g t-c" x="510" y="287">fr.json · ar.json</text></g>
+      <g class="f" style="--d:5"><rect class="box" x="615" y="240" width="195" height="70" rx="8"/><text class="t-m t-c" x="712" y="267">Static assets</text><text class="t-s t-g t-c" x="712" y="287">public/images · next/image</text></g>
+      <g class="f" style="--d:6"><rect class="boxd" x="235" y="360" width="575" height="95" rx="8"/><text class="t-l" x="255" y="390" style="fill:#F5EFE6">Server Action · submitContact</text><text class="t-s" x="255" y="416" style="fill:#d9ccb4">validate  →  anti-spam  →  send email  →  localized response</text><text class="t-s" x="255" y="438" style="fill:#E0B565">the only server-side logic of the project</text></g>
+      <g class="f" style="--d:8"><rect class="boxg" x="900" y="360" width="200" height="95" rx="8"/><text class="t-l t-c" x="1000" y="400">Email provider</text><text class="t-s t-g t-c" x="1000" y="424">Resend or Nodemailer</text></g>
+      <g class="f" style="--d:9"><rect class="box" x="900" y="200" width="200" height="80" rx="8"/><text class="t-l t-c" x="1000" y="235">Company inbox</text><text class="t-s t-g t-c" x="1000" y="257">contact.minoterie@…</text></g>
+      <path class="dr ln" pathLength="1" d="M150 235H185V70H231" marker-end="url(#ar)" style="--d:3"/>
+      <path class="dr ln" pathLength="1" d="M150 265H185V407H231" marker-end="url(#ar)" style="--d:6"/>
+      <path class="dr ln" pathLength="1" d="M320 100V126" marker-end="url(#ar)" style="--d:4"/>
+      <path class="dr ln" pathLength="1" d="M485 165H516" marker-end="url(#ar)" style="--d:4"/>
+      <path class="dr ln" pathLength="1" d="M290 200V236" marker-end="url(#ar)" style="--d:5"/>
+      <path class="dr ln" pathLength="1" d="M440 200V236" marker-end="url(#ar)" style="--d:5"/>
+      <path class="dr ln" pathLength="1" d="M712 200V236" marker-end="url(#ar)" style="--d:5"/>
+      <path class="dr lng" pathLength="1" d="M810 407H896" marker-end="url(#arg)" style="--d:8"/>
+      <path class="dr lng" pathLength="1" d="M1000 360V284" marker-end="url(#arg)" style="--d:9"/>
+    </svg>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>12</span></div>
+</section>
+
+<!-- 13 CONTENT MODEL -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">12 · Technical · Data</p><h2 class="a" style="--d:1">Content model <span class="prop" style="font-size:11px">proposed shapes</span></h2></div>
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start">
+      <div class="code a" style="--d:2"><span class="c">// shared</span>
+<span class="k">type</span> Localized = { fr: string; ar: string }
+
+<span class="c">// content/products.ts</span>
+<span class="k">type</span> Product = {
+  id: string
+  name: Localized
+  range: Localized       <span class="c">// flour type</span>
+  description: Localized
+  image?: string         <span class="c">// empty → logo placeholder</span>
+  packaging?: string[]   <span class="c">// bag sizes</span>
+}</div>
+      <div class="code a" style="--d:3"><span class="c">// content/testimonials.ts</span>
+<span class="k">type</span> Testimonial = {
+  id: string
+  author: string
+  role?: Localized
+  text: Localized
+}
+<span class="c">// empty array → band, page, menu entry hidden</span>
+
+<span class="c">// content/faq.ts</span>
+<span class="k">type</span> Faq = {
+  question: Localized
+  answer: Localized
+}</div>
+      <div class="code a" style="--d:4"><span class="c">// content/site.ts</span>
+<span class="k">export const</span> site = {
+  name: <span class="k">'SARL Minoterie Ouled Lamri'</span>,
+  brand: <span class="k">'LA COLOMBE'</span>,
+  phone: <span class="k">'+213661370011'</span>,
+  whatsapp: <span class="k">'https://wa.me/213661370011'</span>,
+  email: <span class="k">'contact.minoterie@ouled-lamri.com'</span>,
+  hours: [ ... ],
+  coords: { lat, lng },  <span class="c">// pending</span>
+  social: { facebook, instagram }
+}</div>
+      <div class="card a" style="--d:5"><h3>Principles</h3><ul><li>Text content in <code>content/*.ts</code>, UI strings in <code>messages/*.json</code></li><li>Components never hold copy, they receive typed props</li><li>Replacing a placeholder never changes a component</li><li>Empty collections hide their section automatically</li><li>No <code>image</code> set: a still logo placeholder fills the slot</li><li>Types are the contract between front end and content</li></ul></div>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>13</span></div>
+</section>
+
+<!-- 14 BACKEND -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">13 · Back end</p><h2 class="a" style="--d:1">What the back end has to deliver</h2></div>
+  <div class="body" style="display:grid;grid-template-columns:1fr 440px;gap:30px">
+    <div>
+      <table class="t a" style="--d:2">
+        <tr><th style="width:36px">#</th><th>Module</th><th>Detail</th></tr>
+        <tr><td>1</td><td>Contact action</td><td>Server Action <code>submitContact</code> or <code>POST /api/contact</code></td></tr>
+        <tr><td>2</td><td>Validation</td><td>Server-side schema (e.g. zod), trim and sanitize input</td></tr>
+        <tr><td>3</td><td>Anti-spam</td><td>Honeypot field, rate limit per IP <span class="prop">proposed</span></td></tr>
+        <tr><td>4</td><td>Email delivery</td><td>Resend or Nodemailer to the company inbox, reply-to set to the visitor</td></tr>
+        <tr><td>5</td><td>Localized responses</td><td>Return message keys, the UI translates them in FR / AR</td></tr>
+        <tr><td>6</td><td>Configuration</td><td>Environment variables, nothing secret in the repo</td></tr>
+        <tr><td>7</td><td>SEO routes</td><td><code>sitemap.xml</code>, <code>robots.txt</code>, alternate language links</td></tr>
+        <tr><td>8</td><td>Deployment</td><td>Vercel project, env vars, production domain</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="code a" style="--d:3;font-size:12px"><span class="c">// contract with the front end</span>
+<span class="k">type</span> ContactResult =
+  | { ok: <span class="k">true</span> }
+  | { ok: <span class="k">false</span>
+      errors: Partial&lt;Record&lt;
+        'name'|'phone'|'email'|'message',
+        string   <span class="c">// message key</span>
+      &gt;&gt;
+      form?: 'rate_limited' | 'send_failed' }</div>
+      <div class="code a" style="--d:4;margin-top:12px;font-size:12px"><span class="c"># environment</span>
+RESEND_API_KEY=         <span class="c"># or SMTP_*</span>
+CONTACT_TO_EMAIL=contact.minoterie@ouled-lamri.com
+CONTACT_FROM_EMAIL=     <span class="c"># verified sender</span>
+NEXT_PUBLIC_SITE_URL=</div>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>14</span></div>
+</section>
+
+<!-- 15 PENDING -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">14 · Dependencies</p><h2 class="a" style="--d:1">What is still missing, and where it plugs in</h2></div>
+  <div class="body">
+    <table class="t a" style="--d:2">
+      <tr><th>Item</th><th>Status</th><th>Plugs into</th></tr>
+      <tr><td>Logo</td><td><span class="chip ok">received</span></td><td><code>public/images/logo.png</code>, <code>logo-white.png</code></td></tr>
+      <tr><td>Colors and charter</td><td><span class="chip">to be delivered</span></td><td><code>tailwind.config.ts</code> → colors</td></tr>
+      <tr><td>Presentation texts</td><td><span class="chip no">needs raw input</span></td><td><code>content/about.ts</code></td></tr>
+      <tr><td>Flour ranges</td><td><span class="chip no">not provided</span></td><td><code>content/products.ts</code></td></tr>
+      <tr><td>Extra photos</td><td><span class="chip">partial</span></td><td><code>public/images/gallery/</code></td></tr>
+      <tr><td>Testimonials</td><td><span class="chip gy">none yet</span></td><td><code>content/testimonials.ts</code></td></tr>
+      <tr><td>Map coordinates</td><td><span class="chip no">not provided</span></td><td><code>content/site.ts</code></td></tr>
+      <tr><td>Social URLs</td><td><span class="chip no">not provided</span></td><td><code>content/site.ts</code></td></tr>
+    </table>
+    <svg viewBox="0 0 1152 96" width="100%" style="margin-top:16px">
+      <g class="f" style="--d:9"><rect class="boxg" x="0" y="8" width="260" height="44" rx="8"/><text class="t-m t-c" x="130" y="35">Placeholder in place</text></g>
+      <path class="dr lng" pathLength="1" d="M264 30H430" marker-end="url(#arg)" style="--d:10"/>
+      <g class="f" style="--d:10"><rect class="box" x="434" y="8" width="260" height="44" rx="8"/><text class="t-m t-c" x="564" y="35">Client delivers the asset</text></g>
+      <path class="dr lng" pathLength="1" d="M698 30H864" marker-end="url(#arg)" style="--d:11"/>
+      <g class="f" style="--d:11"><rect class="boxd" x="868" y="8" width="284" height="44" rx="8"/><text class="t-m t-c" x="1010" y="35" style="fill:#F5EFE6">File swap, no code change</text></g>
+      <text class="f t-s t-g" x="0" y="86" style="--d:12">Image slots: until real photos arrive, each slot shows the logo as a still watermark on cream, with a fixed ratio. Setting the image path replaces it.</text>
+    </svg>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>15</span></div>
+</section>
+
+<!-- 16 SEO PERF -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">15 · Quality</p><h2 class="a" style="--d:1">SEO and performance targets</h2></div>
+  <div class="body" style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+    <div>
+      <p class="t-l a" style="--d:2;font-weight:600;color:var(--brown);margin-bottom:12px">Core Web Vitals, mid-range phone <span class="prop">targets</span></p>
+      <svg viewBox="0 0 520 300" width="100%">
+        <g class="t-m"><text x="0" y="22">LCP</text><text x="0" y="112">INP</text><text x="0" y="202">CLS</text></g>
+        <g class="t-s t-g"><text x="0" y="40">Largest Contentful Paint</text><text x="0" y="130">Interaction to Next Paint</text><text x="0" y="220">Cumulative Layout Shift</text></g>
+        <rect x="0" y="52" width="400" height="16" rx="8" fill="#ECE6DA"/><rect class="gx" x="0" y="52" width="320" height="16" rx="8" fill="#C08A2E" style="--d:3"/>
+        <text x="410" y="65" class="t-m" font-weight="600">≤ 2.5 s</text>
+        <rect x="0" y="142" width="400" height="16" rx="8" fill="#ECE6DA"/><rect class="gx" x="0" y="142" width="280" height="16" rx="8" fill="#C08A2E" style="--d:4"/>
+        <text x="410" y="155" class="t-m" font-weight="600">≤ 200 ms</text>
+        <rect x="0" y="232" width="400" height="16" rx="8" fill="#ECE6DA"/><rect class="gx" x="0" y="232" width="160" height="16" rx="8" fill="#C08A2E" style="--d:5"/>
+        <text x="410" y="245" class="t-m" font-weight="600">≤ 0.1</text>
+        <text x="0" y="285" class="t-s t-g">Bars show the allowed budget, shorter is stricter.</text>
+      </svg>
+    </div>
+    <div class="card a" style="--d:3;align-self:start">
+      <h3>SEO and delivery checklist</h3>
+      <ul>
+        <li>Title and description in FR and AR for "minoterie Bordj Bou Arréridj"</li>
+        <li><code>sitemap.xml</code> and <code>robots.txt</code></li>
+        <li>Alternate language links between FR and AR pages</li>
+        <li>Local business structured data from <code>site.ts</code></li>
+        <li>Images through <code>next/image</code>, explicit sizes, WebP/AVIF</li>
+        <li>Fonts through <code>next/font</code>, subset per locale</li>
+        <li>Mobile-first, no horizontal scroll from 320 px</li>
+        <li>Lighthouse mobile: performance ≥ 90, accessibility ≥ 95</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>16</span></div>
+</section>
+
+<!-- 17 ROADMAP -->
+<section class="slide">
+  <div class="sh"><p class="kicker a">16 · Sequence</p><h2 class="a" style="--d:1">Delivery sequence</h2></div>
+  <div class="body">
+    <svg viewBox="0 0 1152 400" width="100%">
+      <g class="t-m">
+        <text x="0" y="38">1  Brand identity</text><text x="0" y="98">2  UI design</text><text x="0" y="158">3  Front-end build</text><text x="0" y="218">4  Back-end</text><text x="0" y="278">5  Content integration</text><text x="0" y="338">6  QA, SEO, launch</text>
+      </g>
+      <g stroke="#DCCFBA"><path d="M250 0V370M450 0V370M650 0V370M850 0V370M1050 0V370"/></g>
+      <g fill="#C08A2E">
+        <rect class="gx" x="250" y="14" width="200" height="34" rx="6" style="--d:2"/>
+        <rect class="gx" x="400" y="74" width="250" height="34" rx="6" style="--d:3"/>
+        <rect class="gx" x="550" y="134" width="350" height="34" rx="6" style="--d:4"/>
+        <rect class="gx" x="650" y="194" width="300" height="34" rx="6" style="--d:5" fill="#4A3B2A"/>
+        <rect class="gx" x="800" y="254" width="250" height="34" rx="6" style="--d:6"/>
+        <rect class="gx" x="950" y="314" width="200" height="34" rx="6" style="--d:7" fill="#4A3B2A"/>
+      </g>
+      <g class="t-s t-w" font-weight="600"><text class="f" x="262" y="36" style="--d:6">design system, brand guide</text><text class="f" x="412" y="96" style="--d:7">tokens, layouts, RTL</text><text class="f" x="562" y="156" style="--d:8">pages, components, i18n</text><text class="f" x="662" y="216" style="--d:9">contact action, email</text><text class="f" x="812" y="276" style="--d:10">texts, products, photos</text><text class="f" x="962" y="336" style="--d:11">Lighthouse, deploy</text></g>
+      <path class="lnd f" d="M450 48V74M650 108V134M770 168V194" style="--d:8"/>
+      <text class="f t-s t-g" x="0" y="392" style="--d:10">Order and overlap only, no dates. The front-end and back-end meet at the ContactResult contract, so they can progress in parallel.</text>
+    </svg>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>17</span></div>
+</section>
+
+<!-- 18 OPEN POINTS -->
+<section class="slide dark">
+  <div class="sh"><p class="kicker a">17 · Summary</p><h2 class="a" style="--d:1;color:#F5EFE6">Open points and hand-off</h2></div>
+  <div class="body" style="display:grid;grid-template-columns:1fr 1fr;gap:36px">
+    <div>
+      <p class="a" style="--d:2;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">To settle</p>
+      <ul style="list-style:none;font-size:16px;line-height:1.5;color:#E7D7B8">
+        <li class="a" style="--d:3;padding:10px 0;border-bottom:1px solid #6b5942">Official colors: confirm against the supplied logo</li>
+        <li class="a" style="--d:4;padding:10px 0;border-bottom:1px solid #6b5942">Default language when none is detected (proposal: French)</li>
+        <li class="a" style="--d:5;padding:10px 0;border-bottom:1px solid #6b5942">Sender domain for outgoing email</li>
+        <li class="a" style="--d:6;padding:10px 0;border-bottom:1px solid #6b5942">Required vs optional form fields</li>
+        <li class="a" style="--d:7;padding:10px 0;border-bottom:1px solid #6b5942">Map coordinates and social URLs</li>
+        <li class="a" style="--d:8;padding:10px 0">Production domain and hosting account</li>
+      </ul>
+    </div>
+    <div>
+      <p class="a" style="--d:2;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Back-end hand-off</p>
+      <div class="code a" style="--d:4;background:#2B2218;border:1px solid #6b5942;font-size:13px"><span class="c">Input </span>  name, phone, email?, subject?, message,
+         honeypot, locale
+<span class="c">Output</span>  { ok: true } | { ok: false, errors }
+<span class="c">Side effect</span>  one email to the company inbox
+<span class="c">Rules</span>  server-side validation, anti-spam,
+       no secret in the repository
+<span class="c">Extra</span>  sitemap.xml, robots.txt, env + deploy</div>
+      <p class="a" style="--d:6;margin-top:18px;font-size:15px;line-height:1.55;color:#cbbda6">Everything else on the site is static content and does not depend on the back end.</p>
+    </div>
+  </div>
+  <div class="foot"><span>LA COLOMBE · Technical briefing</span><span>18</span></div>
+</section>
+
+</div>
+
+<div class="nav"><button id="prev" aria-label="Previous">←</button><span id="cnt">1 / 18</span><button id="next" aria-label="Next">→</button></div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide')),i=0,stage=document.getElementById('stage');
+  function fit(){stage.style.setProperty('--s',Math.min(innerWidth/1280,innerHeight/720))}
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(s,k){s.classList.toggle('active',k===i)});document.body.classList.toggle('dk',slides[i].classList.contains('dark'));
+    document.getElementById('cnt').textContent=(i+1)+' / '+slides.length;
+    document.getElementById('bar').style.width=((i+1)/slides.length*100)+'%';
+    try{history.replaceState(null,'','#'+(i+1))}catch(e){}
+  }
+  addEventListener('resize',fit);fit();
+  addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();go(i+1)}
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>-1){e.preventDefault();go(i-1)}
+    else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);
+  });
+  document.getElementById('next').onclick=function(){go(i+1)};
+  document.getElementById('prev').onclick=function(){go(i-1)};
+  var x0=null;
+  addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  addEventListener('touchend',function(e){if(x0===null)return;var d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)go(i+(d<0?1:-1));x0=null});
+  stage.addEventListener('click',function(e){if(e.target.closest('a,button'))return;go(i+(e.clientX>innerWidth/2?1:-1))});
+  var h=parseInt(location.hash.slice(1),10);go(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>

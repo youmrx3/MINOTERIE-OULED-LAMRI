@@ -1,0 +1,401 @@
+{
+  "manifestVersion": 3,
+  "name": "La Colombe",
+  "namespace": "LaColombe",
+  "files": [
+    "accessibility.md",
+    "assets/Icons/README.md",
+    "components/Buttons/README.md",
+    "components/ContactBlocks/README.md",
+    "components/FaqAccordion/README.md",
+    "components/Feedback/README.md",
+    "components/FloatingWhatsApp/README.md",
+    "components/Footer/README.md",
+    "components/Forms/README.md",
+    "components/Gallery/README.md",
+    "components/Header/README.md",
+    "components/Hero/README.md",
+    "components/Icons/README.md",
+    "components/ImagePlaceholder/README.md",
+    "components/LanguageSwitcher/README.md",
+    "components/Links/README.md",
+    "components/Logo/README.md",
+    "components/ProductCard/README.md",
+    "components/SectionHeader/README.md",
+    "components/SocialLinks/README.md",
+    "components/StrengthItem/README.md",
+    "components/TestimonialCard/README.md",
+    "components/bundle.css",
+    "contrast.md",
+    "developer-handoff.md",
+    "do-and-dont.md",
+    "image-placeholder.md",
+    "layout-and-motion.md",
+    "page-templates.md",
+    "rtl-and-arabic.md",
+    "tokens.css"
+  ],
+  "libraries": [],
+  "components": [
+    {
+      "name": "Buttons",
+      "group": "Actions",
+      "summary": "Primary, secondary, ghost, Call and WhatsApp buttons in sizes M and L."
+    },
+    {
+      "name": "ContactBlocks",
+      "group": "Contact",
+      "summary": "Contact info card, opening hours table and static map block."
+    },
+    {
+      "name": "ContactDesktopAR",
+      "group": "Templates"
+    },
+    {
+      "name": "ContactDesktopFR",
+      "group": "Templates"
+    },
+    {
+      "name": "ContactMobile",
+      "group": "Templates"
+    },
+    {
+      "name": "FaqAccordion",
+      "group": "Content",
+      "summary": "Accordion of questions and answers with a 220ms open and close."
+    },
+    {
+      "name": "Feedback",
+      "group": "Feedback",
+      "summary": "Badge, chip, alert and toast components."
+    },
+    {
+      "name": "FloatingWhatsApp",
+      "group": "Actions",
+      "summary": "Floating WhatsApp button fixed at the end corner of the viewport."
+    },
+    {
+      "name": "Footer",
+      "group": "Navigation",
+      "summary": "Brown-surface footer with logo, quick links, address, hours, phone, e-mail and social links."
+    },
+    {
+      "name": "Forms",
+      "group": "Forms",
+      "summary": "Contact form controls: text, phone, select, textarea, helper and error text, success banner and a submit button with a loading state."
+    },
+    {
+      "name": "Gallery",
+      "group": "Images",
+      "summary": "Photo grid of 1:1 and 4:3 tiles with a lightbox that opens on activation."
+    },
+    {
+      "name": "Header",
+      "group": "Navigation",
+      "summary": "Site header with logo, navigation, language switcher and Call button; below 1024px it collapses to a menu button and a drawer."
+    },
+    {
+      "name": "Hero",
+      "group": "Content",
+      "summary": "Home hero with overline, display title, intro, two calls to action and a hero image slot."
+    },
+    {
+      "name": "HomeDesktopAR",
+      "group": "Templates"
+    },
+    {
+      "name": "HomeDesktopFR",
+      "group": "Templates"
+    },
+    {
+      "name": "HomeMobile",
+      "group": "Templates"
+    },
+    {
+      "name": "Icons",
+      "group": "Identity",
+      "summary": "The 17-icon line set: 24px grid, 1.5px line, round caps."
+    },
+    {
+      "name": "ImagePlaceholder",
+      "group": "Images",
+      "summary": "Static cream image slot with a low-opacity logo watermark and a fixed aspect ratio."
+    },
+    {
+      "name": "LanguageSwitcher",
+      "group": "Navigation",
+      "summary": "FR | AR switch as a pill with the current language filled."
+    },
+    {
+      "name": "Links",
+      "group": "Actions",
+      "summary": "Underlined text links plus inline phone, e-mail and arrow links."
+    },
+    {
+      "name": "Logo",
+      "group": "Identity",
+      "summary": "Plain-type wordmark \"LA COLOMBE\" with the mill name underneath, standing in until the logo file is attached."
+    },
+    {
+      "name": "ProductCard",
+      "group": "Products",
+      "summary": "Product card (image 4:3, range, name, description, sizes, link) and the larger product section block."
+    },
+    {
+      "name": "ProductsDesktopAR",
+      "group": "Templates"
+    },
+    {
+      "name": "ProductsDesktopFR",
+      "group": "Templates"
+    },
+    {
+      "name": "ProductsMobile",
+      "group": "Templates"
+    },
+    {
+      "name": "SectionHeader",
+      "group": "Content",
+      "summary": "Overline, title, gold rule and intro that open each section."
+    },
+    {
+      "name": "SocialLinks",
+      "group": "Contact",
+      "summary": "Facebook and Instagram icon links."
+    },
+    {
+      "name": "StrengthItem",
+      "group": "Content",
+      "summary": "A circular icon, a short title and one line of text."
+    },
+    {
+      "name": "TestimonialCard",
+      "group": "Content",
+      "summary": "Quote card with name and role and an initial instead of a photo."
+    }
+  ],
+  "assetGroups": [
+    {
+      "name": "Icons",
+      "tile": "s",
+      "order": [
+        "arrow-rtl.svg",
+        "arrow.svg",
+        "calendar.svg",
+        "chevron-rtl.svg",
+        "chevron.svg",
+        "clock.svg",
+        "close.svg",
+        "facebook.svg",
+        "factory.svg",
+        "instagram.svg",
+        "language.svg",
+        "mail.svg",
+        "map-pin.svg",
+        "menu.svg",
+        "phone.svg",
+        "quality.svg",
+        "truck.svg",
+        "whatsapp.svg",
+        "wheat.svg"
+      ],
+      "files": [
+        {
+          "path": "assets/Icons/arrow-rtl.svg",
+          "id": "c02c391623eb997a64877593ed82d6aa"
+        },
+        {
+          "path": "assets/Icons/arrow.svg",
+          "id": "5e2bc8e3843f5de74b3876ec347bf6fa"
+        },
+        {
+          "path": "assets/Icons/calendar.svg",
+          "id": "19d5f4200732d95da7d54ae26a945bb4"
+        },
+        {
+          "path": "assets/Icons/chevron-rtl.svg",
+          "id": "f450486ae30da49a7c51129977ea740c"
+        },
+        {
+          "path": "assets/Icons/chevron.svg",
+          "id": "8da22384a6fed28c9c2b7a030f2fc757"
+        },
+        {
+          "path": "assets/Icons/clock.svg",
+          "id": "244ad858df24a86dd8527adfdc36c5c9"
+        },
+        {
+          "path": "assets/Icons/close.svg",
+          "id": "c1fa0e3edf2d49c9c94b26e6806d3879"
+        },
+        {
+          "path": "assets/Icons/facebook.svg",
+          "id": "2dc5be05b4963333a163188108fadcc0"
+        },
+        {
+          "path": "assets/Icons/factory.svg",
+          "id": "dda29bec0f81923a63e50d65103ab563"
+        },
+        {
+          "path": "assets/Icons/instagram.svg",
+          "id": "7a6774986aed55f0f8446e194b17e4fd"
+        },
+        {
+          "path": "assets/Icons/language.svg",
+          "id": "ef409edac70cb47a15edb578385806cb"
+        },
+        {
+          "path": "assets/Icons/mail.svg",
+          "id": "0663b0c290941cfb3400e8341b254d09"
+        },
+        {
+          "path": "assets/Icons/map-pin.svg",
+          "id": "70db03c5d77c5067cd9cabcbe7167f55"
+        },
+        {
+          "path": "assets/Icons/menu.svg",
+          "id": "1bca68d385d945356ad30689176e5020"
+        },
+        {
+          "path": "assets/Icons/phone.svg",
+          "id": "71e21963ba4aa2264e40b7c2c76e98e7"
+        },
+        {
+          "path": "assets/Icons/quality.svg",
+          "id": "ea46f5d9725e5b4062ade3af8d8f47bf"
+        },
+        {
+          "path": "assets/Icons/truck.svg",
+          "id": "c0fcacf5a1e387829e56a8551dd5d3e6"
+        },
+        {
+          "path": "assets/Icons/whatsapp.svg",
+          "id": "b13b11b4d30937538bc7fca6fa59c8c6"
+        },
+        {
+          "path": "assets/Icons/wheat.svg",
+          "id": "a8c1ac09d3e898afa7c14de1588798c4"
+        }
+      ]
+    }
+  ],
+  "storage": {
+    "files": {
+      "assets/Icons/arrow-rtl.svg": {
+        "store": "blob",
+        "id": "c02c391623eb997a64877593ed82d6aa",
+        "bytes": 270,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/arrow.svg": {
+        "store": "blob",
+        "id": "5e2bc8e3843f5de74b3876ec347bf6fa",
+        "bytes": 223,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/calendar.svg": {
+        "store": "blob",
+        "id": "19d5f4200732d95da7d54ae26a945bb4",
+        "bytes": 278,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/chevron-rtl.svg": {
+        "store": "blob",
+        "id": "f450486ae30da49a7c51129977ea740c",
+        "bytes": 261,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/chevron.svg": {
+        "store": "blob",
+        "id": "8da22384a6fed28c9c2b7a030f2fc757",
+        "bytes": 214,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/clock.svg": {
+        "store": "blob",
+        "id": "244ad858df24a86dd8527adfdc36c5c9",
+        "bytes": 257,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/close.svg": {
+        "store": "blob",
+        "id": "c1fa0e3edf2d49c9c94b26e6806d3879",
+        "bytes": 222,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/facebook.svg": {
+        "store": "blob",
+        "id": "2dc5be05b4963333a163188108fadcc0",
+        "bytes": 312,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/factory.svg": {
+        "store": "blob",
+        "id": "dda29bec0f81923a63e50d65103ab563",
+        "bytes": 266,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/instagram.svg": {
+        "store": "blob",
+        "id": "7a6774986aed55f0f8446e194b17e4fd",
+        "bytes": 311,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/language.svg": {
+        "store": "blob",
+        "id": "ef409edac70cb47a15edb578385806cb",
+        "bytes": 353,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/mail.svg": {
+        "store": "blob",
+        "id": "0663b0c290941cfb3400e8341b254d09",
+        "bytes": 277,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/map-pin.svg": {
+        "store": "blob",
+        "id": "70db03c5d77c5067cd9cabcbe7167f55",
+        "bytes": 305,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/menu.svg": {
+        "store": "blob",
+        "id": "1bca68d385d945356ad30689176e5020",
+        "bytes": 225,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/phone.svg": {
+        "store": "blob",
+        "id": "71e21963ba4aa2264e40b7c2c76e98e7",
+        "bytes": 328,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/quality.svg": {
+        "store": "blob",
+        "id": "ea46f5d9725e5b4062ade3af8d8f47bf",
+        "bytes": 291,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/truck.svg": {
+        "store": "blob",
+        "id": "c0fcacf5a1e387829e56a8551dd5d3e6",
+        "bytes": 347,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/whatsapp.svg": {
+        "store": "blob",
+        "id": "b13b11b4d30937538bc7fca6fa59c8c6",
+        "bytes": 336,
+        "type": "image/svg+xml"
+      },
+      "assets/Icons/wheat.svg": {
+        "store": "blob",
+        "id": "a8c1ac09d3e898afa7c14de1588798c4",
+        "bytes": 524,
+        "type": "image/svg+xml"
+      }
+    },
+    "blobBytesUsed": 5600
+  }
+}

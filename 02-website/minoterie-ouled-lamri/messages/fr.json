@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "siteName": "La Colombe — Minoterie Ouled Lamri",
+    "title": "La Colombe — Minoterie à Bordj Bou Arréridj",
+    "description": "Minoterie Ouled Lamri, marque La Colombe : farines de blé pour boulangers, pâtissiers, grossistes et familles. Ain Tasserra, Bordj Bou Arréridj. Appelez le 0661 37 00 11.",
+    "about": "À propos de la minoterie",
+    "products": "Nos farines",
+    "gallery": "Galerie",
+    "testimonials": "Témoignages",
+    "faq": "Questions fréquentes",
+    "contact": "Contact et accès"
+  },
+  "nav": {
+    "home": "Accueil",
+    "about": "La minoterie",
+    "products": "Farines",
+    "gallery": "Galerie",
+    "testimonials": "Témoignages",
+    "faq": "Questions",
+    "contact": "Contact",
+    "menu": "Ouvrir le menu",
+    "close": "Fermer le menu",
+    "skip": "Aller au contenu",
+    "language": "Langue",
+    "homeLabel": "La Colombe, accueil"
+  },
+  "cta": {
+    "call": "Appeler",
+    "callLong": "Appeler la minoterie",
+    "whatsapp": "WhatsApp",
+    "whatsappLong": "Écrire sur WhatsApp",
+    "quote": "Demander un prix",
+    "waText": "Bonjour La Colombe, je souhaite des informations sur vos farines."
+  },
+  "placeholder": "Photo à venir",
+  "home": {
+    "hero": {
+      "overline": "Minoterie Ouled Lamri · Bordj Bou Arréridj",
+      "lines": ["La farine de", "Bordj Bou Arréridj,", "pour ceux qui font", "le pain chaque jour."],
+      "lead": "La Colombe fournit en farine les boulangers, les pâtissiers, les grossistes et les familles de la région. Un appel suffit pour connaître les prix et les délais.",
+      "hoursNote": "Sam–Mer 8h–16h · Jeu 8h–12h"
+    },
+    "values": {
+      "overline": "Ce qui ne change pas",
+      "title": "Trois engagements, sac après sac",
+      "items": [
+        { "title": "Constance", "text": "Une farine régulière, sac après sac. Chaque lot est contrôlé avant de quitter la minoterie." },
+        { "title": "Proximité", "text": "Au service des artisans de la région. Vous parlez directement à la minoterie, sans intermédiaire." },
+        { "title": "Savoir-faire", "text": "Le métier de meunier, fait avec soin : du choix du blé jusqu'à l'ensachage." }
+      ]
+    },
+    "products": {
+      "overline": "Nos farines",
+      "title": "Une farine pour chaque fournil",
+      "intro": "Du sac de 50 kg pour la boulangerie au format familial. Demandez la fiche et le prix du jour.",
+      "all": "Voir toutes les farines"
+    },
+    "about": {
+      "overline": "La minoterie",
+      "title": "Un moulin des hauts plateaux, à Ain Tasserra",
+      "text": "La minoterie Ouled Lamri transforme le blé en farine à Bir Aissa, dans la wilaya de Bordj Bou Arréridj. Sa marque, La Colombe, porte une idée simple : une farine blanche, propre et régulière, livrée à ceux qui en vivent.",
+      "more": "Découvrir la minoterie"
+    },
+    "gallery": {
+      "overline": "Au moulin",
+      "title": "Du grain au sac",
+      "all": "Ouvrir la galerie"
+    },
+    "testimonials": {
+      "overline": "Ils travaillent avec nous",
+      "title": "La parole aux boulangers"
+    }
+  },
+  "ctaBand": {
+    "overline": "Minoterie Ouled Lamri",
+    "title": "Un prix, un délai, une question ?",
+    "text": "Appelez la minoterie : vous avez une réponse dans la journée, aux heures d'ouverture."
+  },
+  "about": {
+    "overline": "La minoterie",
+    "title": "Le métier de meunier, à Bordj Bou Arréridj",
+    "intro": "Minoterie Ouled Lamri est une entreprise de la wilaya de Bordj Bou Arréridj. Elle produit et vend des farines de blé sous la marque La Colombe.",
+    "storyTitle": "Pourquoi La Colombe",
+    "story": [
+      "La colombe est l'oiseau de la paix et de la pureté. Pour une minoterie, c'est aussi la couleur de ce qu'elle produit : une farine blanche et propre.",
+      "Dans le logo, elle porte un rameau. C'est notre façon de dire que la farine est d'abord une affaire de confiance entre le meunier, le boulanger et ceux qui mangent le pain."
+    ],
+    "processOverline": "Du grain au sac",
+    "processTitle": "Quatre étapes, toujours dans le même ordre",
+    "process": [
+      { "title": "Réception et nettoyage", "text": "Le blé est contrôlé à l'arrivée, puis trié et nettoyé avant d'entrer au moulin." },
+      { "title": "Mouture", "text": "Le grain est broyé progressivement pour séparer l'amande de l'enveloppe." },
+      { "title": "Tamisage", "text": "Les tamis classent la mouture et donnent à chaque farine sa finesse." },
+      { "title": "Contrôle et ensachage", "text": "Chaque lot est vérifié, puis mis en sac et étiqueté avant l'expédition." }
+    ],
+    "valuesOverline": "Nos valeurs",
+    "locationOverline": "Où nous trouver",
+    "locationTitle": "Ain Tasserra, wilaya de Bordj Bou Arréridj",
+    "locationText": "La minoterie se trouve à Bir Aissa, sur la commune d'Ain Tasserra. Les particuliers et les professionnels peuvent venir sur place aux heures d'ouverture."
+  },
+  "products": {
+    "overline": "Nos farines",
+    "title": "Des farines de blé pour le pain, la pâtisserie et la maison",
+    "intro": "Chaque farine est disponible en plusieurs formats. Les prix suivent le marché du blé : appelez-nous pour le prix du jour.",
+    "use": "Usage",
+    "sizes": "Formats",
+    "ask": "Demander le prix",
+    "waAsk": "Bonjour, je souhaite le prix de la farine : "
+  },
+  "gallery": {
+    "overline": "Galerie",
+    "title": "La minoterie en images",
+    "intro": "Le moulin, la production et les sacs qui partent chaque jour vers les boulangeries de la région.",
+    "close": "Fermer",
+    "prev": "Photo précédente",
+    "next": "Photo suivante",
+    "of": "sur"
+  },
+  "testimonials": {
+    "overline": "Témoignages",
+    "title": "Ce qu'en disent nos clients",
+    "intro": "Boulangers, pâtissiers et grossistes de la région."
+  },
+  "faq": {
+    "overline": "Questions fréquentes",
+    "title": "Ce qu'on nous demande le plus",
+    "intro": "Livraison, quantités, prix. Si votre question n'est pas ici, le plus simple est d'appeler.",
+    "more": "Une autre question ?"
+  },
+  "contact": {
+    "overline": "Contact",
+    "title": "Parlons farine",
+    "intro": "Le téléphone reste le plus rapide. Vous pouvez aussi écrire sur WhatsApp ou remplir le formulaire : nous répondons aux heures d'ouverture.",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "address": "Adresse",
+    "hours": "Horaires",
+    "social": "Suivez-nous",
+    "map": "Plan d'accès",
+    "openMaps": "Ouvrir dans Google Maps",
+    "mapNote": "Coordonnées exactes bientôt disponibles.",
+    "days": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+    "closed": "Fermé",
+    "today": "Aujourd'hui",
+    "openNow": "Ouvert maintenant",
+    "closedNow": "Fermé maintenant",
+    "closesAt": "ferme à",
+    "formTitle": "Envoyer un message",
+    "form": {
+      "name": "Nom",
+      "namePh": "Votre nom ou celui de votre commerce",
+      "phone": "Téléphone",
+      "phoneHelp": "Nous vous rappelons sur ce numéro.",
+      "email": "E-mail",
+      "optional": "facultatif",
+      "subject": "Sujet",
+      "subjects": ["Demande de prix", "Commande", "Livraison", "Autre question"],
+      "message": "Message",
+      "messagePh": "Produit, quantité, ville de livraison…",
+      "submit": "Envoyer le message",
+      "sending": "Envoi en cours…",
+      "successTitle": "Message envoyé",
+      "success": "Merci. La minoterie vous recontacte rapidement, aux heures d'ouverture.",
+      "errorTitle": "Le message n'est pas parti",
+      "errors": {
+        "required": "Ce champ est obligatoire.",
+        "phone": "Entrez un numéro algérien, par exemple 0661 37 00 11.",
+        "email": "Cette adresse e-mail n'est pas valide.",
+        "short": "Ajoutez quelques mots de plus.",
+        "rate": "Trop d'envois en peu de temps. Réessayez dans quelques minutes ou appelez-nous.",
+        "delivery": "L'envoi a échoué. Appelez-nous au 0661 37 00 11 ou réessayez plus tard.",
+        "form": "Corrigez les champs signalés, puis renvoyez."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "La farine de Bordj Bou Arréridj, pour ceux qui font le pain chaque jour.",
+    "pages": "Pages",
+    "contact": "Contact",
+    "hours": "Horaires",
+    "hoursLines": ["Samedi – mercredi · 8h–16h", "Jeudi · 8h–12h", "Vendredi · fermé"],
+    "rights": "Tous droits réservés."
+  },
+  "notFound": {
+    "title": "Cette page n'existe pas",
+    "text": "Le lien est peut-être ancien. Revenez à l'accueil ou appelez-nous.",
+    "back": "Retour à l'accueil"
+  }
+}

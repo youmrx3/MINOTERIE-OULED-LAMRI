@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500&display=swap"></link></helmet>
+<svg viewBox="0 0 600 600" style="display:block;width:100%;height:100%;overflow:visible">
+  <defs>
+    <path id="{{ topId }}" d="M 70.5 300 A 229.5 229.5 0 0 1 529.5 300"></path>
+    <path id="{{ botId }}" d="M 44.7 300 A 255.3 255.3 0 0 0 555.3 300"></path>
+  </defs>
+  <circle cx="300" cy="300" r="296" fill="{{ fill }}" stroke="{{ accent }}" stroke-width="3"></circle>
+  <circle cx="300" cy="300" r="287" fill="none" stroke="{{ accent }}" stroke-width="1"></circle>
+  <circle cx="300" cy="300" r="279" fill="none" stroke="{{ accent }}" stroke-width="3" stroke-linecap="round" stroke-dasharray="0 9.73"></circle>
+  <text fill="{{ ink }}" style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:54px;letter-spacing:16px">
+    <textPath href="#{{ topId }}" startOffset="51.11%" text-anchor="middle">LA COLOMBE</textPath>
+  </text>
+  <text fill="{{ ink }}" style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:28px;letter-spacing:9px">
+    <textPath href="#{{ botId }}" startOffset="50.56%" text-anchor="middle">MINOTERIE OULED LAMRI</textPath>
+  </text>
+  <polygon points="52,287 55.5,296.5 65,300 55.5,303.5 52,313 48.5,303.5 39,300 48.5,296.5" fill="{{ accent }}"></polygon>
+  <polygon points="548,287 551.5,296.5 561,300 551.5,303.5 548,313 544.5,303.5 535,300 544.5,296.5" fill="{{ accent }}"></polygon>
+  <circle cx="300" cy="300" r="214" fill="none" stroke="{{ accent }}" stroke-width="1.5"></circle>
+  <circle cx="300" cy="300" r="206" fill="none" stroke="{{ accent }}" stroke-width="0.75"></circle>
+  <image href="{{ logo }}" x="182" y="185" width="236" height="230"></image>
+</svg>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:600,&quot;height&quot;:600},&quot;ink&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#3A2516&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#B5893E&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;fill&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;none&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;logo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;assets/logo-brown.svg&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+let __n=0;
+class Component extends DCLogic {
+  uid = 's' + (++__n) + Math.random().toString(36).slice(2,6);
+  renderVals() {
+    const p=this.props;
+    return { topId:this.uid+'t', botId:this.uid+'b',
+      ink:p.ink ?? '#3A2516', accent:p.accent ?? '#B5893E', fill:p.fill ?? 'none',
+      logo:p.logo ?? 'assets/logo-brown.svg' };
+  }
+}
+</script>
+</body>
+</html>

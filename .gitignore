@@ -1,0 +1,16 @@
+# dependencies & builds
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# secrets
+.env
+.env.*
+!.env.example
+
+# local tooling
+.claude/
+.DS_Store
+Thumbs.db
