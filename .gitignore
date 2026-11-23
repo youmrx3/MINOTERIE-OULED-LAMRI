@@ -15,5 +15,5 @@ next-env.d.ts
 .DS_Store
 Thumbs.db
 
-# documentation stays local only
-*.md
+# AI generation prompts stay local only
+*prompt*.md
